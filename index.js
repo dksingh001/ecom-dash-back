@@ -4,7 +4,9 @@ const app = express()
 const router = express.Router();
 const cors = require("cors");
 const userRouter = require("./router/Userauth")
+const productRouter = require("./router/productrouter")
 const cookieParser = require("cookie-parser");
+const fileupload = require("express-fileupload")
 
 app.use(cookieParser());
 
@@ -29,7 +31,15 @@ app.get('/', (req, resp)=>{
 })
 
 
+app.use(
+    fileupload({
+      useTempFiles:true,
+      tempFileDir:"/tmp"
+    })
+  )
+
 app.use('/auth', userRouter )
+app.use('/product', productRouter);
 
 app.listen(port, ()=>{
     console.log("Listening on", port)
