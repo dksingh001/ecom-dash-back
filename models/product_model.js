@@ -14,13 +14,16 @@ const productmodel = mongoose.Schema({
         type:String,
     },
     color:{
-        type:Image,
+        type:String,
     },
     size:{
         type:String,
     },
     offer:{
-        type:String
+        type:String,
+    },
+    photos:{
+        type:String,
     }
 })
 

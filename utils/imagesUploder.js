@@ -1,4 +1,4 @@
-const couldniary = require("cloudniary").v2;
+const cloudinary = require("cloudinary").v2;
 
 
 exports.uploadTocloudinary = async (file, folder, height, quality)=>{
@@ -12,9 +12,9 @@ exports.uploadTocloudinary = async (file, folder, height, quality)=>{
     }
     options.resource_type = "auto"
 
-    return await couldniary.uploader.upload(file.tempFilePath, options);
+    return await cloudinary.uploader.upload(file.tempFilePath, options);
 
   } catch (error) {
-      console.log("error in cloudinary " , error);
+      console.log("error in cloudinary" , error);
   }
 }
