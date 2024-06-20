@@ -7,7 +7,7 @@ const productmodel = mongoose.Schema({
   title: {
     type: String,
   },
-  price: {
+  price: {  
     type: Number,
   },
   ratings: {
@@ -22,14 +22,14 @@ const productmodel = mongoose.Schema({
   offer: {
     type: String,
   },
-  photos: {
-    public_id: { type: String, required: true },
+  // photos: {
+  //   public_id: { type: String, required: true },
 
-    url: { type: String, required: true },
-  },
-  // photos:{
-  //     type:String,
-  // }
+  //   url: { type: String, required: true },
+  // },
+  photos:{
+      type:String,
+  }
 });
 
 const productSchema = mongoose.model("ProductDetails", productmodel);

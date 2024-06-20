@@ -6,7 +6,7 @@ const cors = require("cors");
 const userRouter = require("./router/Userauth")
 const productRouter = require("./router/productrouter")
 const cookieParser = require("cookie-parser");
-const fileupload = require("express-fileupload")
+// const fileupload = require("express-fileupload")
 
 app.use(cookieParser());
 
@@ -19,8 +19,8 @@ const  connectDb = require('./db/user_conn');
 connectDb();
 
 // cloudinary connect
-const cloudinaryConnect = require("./db/cloudinary")
-cloudinaryConnect()
+// const cloudinaryConnect = require("./db/cloudinary")
+// cloudinaryConnect()
 
 
 app.use(express.json());
@@ -31,12 +31,12 @@ app.get('/', (req, resp)=>{
 })
 
 
-app.use(
-    fileupload({
-      useTempFiles:true,
-      tempFileDir:"/tmp"
-    })
-  )
+// app.use(
+//     fileupload({
+//       useTempFiles:true,
+//       tempFileDir:"/tmp"
+//     })
+//   )
 
 app.use('/auth', userRouter )
 app.use('/product', productRouter);

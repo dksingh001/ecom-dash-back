@@ -1,20 +1,45 @@
 const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const multer = require('multer');
 
 
-exports.uploadTocloudinary = async (file, folder, height, quality)=>{
-  try {
-    const options = {folder};
-    if (height) {
-        options.height = height;
+// exports.uploadTocloudinary = async (file, folder, height, quality)=>{
+//   try {
+//     const options = {folder};
+//     if (height) {
+//         options.height = height;
+//     }
+//     if (quality) {
+//         options.quality = quality;
+//     }
+//     options.resource_type = "auto"
+
+//     return await cloudinary.uploader.upload(file.tempFilePath, options);
+
+//   } catch (error) {
+//       console.log("error in cloudinary" , error);
+//   }
+// }
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: async (req, file) => {
+    try {
+      return {
+        folder: 'upload',
+        format: 'png', // or use file.mimetype.split('/')[1] for dynamic format
+        public_id: 'computed-filename-using-request',
+      };
+    } catch (error) {
+      console.error('Error configuring Cloudinary storage:', error);
+      throw new Error('Failed to configure Cloudinary storage');
     }
-    if (quality) {
-        options.quality = quality;
-    }
-    options.resource_type = "auto"
+  },
+});
 
-    return await cloudinary.uploader.upload(file.tempFilePath, options);
+const upload = multer({ storage });
 
-  } catch (error) {
-      console.log("error in cloudinary" , error);
-  }
-}
+module.exports = upload;
+
+// const multer = require('multer');
+// const upload = multer({ dest: 'uploads/' }); // Configure storage and other settings as needed
