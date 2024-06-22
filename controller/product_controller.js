@@ -1,25 +1,38 @@
 const Product = require("../models/product_model");
 const { uploadTocloudinary } = require("../utils/imagesUploder");
 const Subcategory = require("../models/productSubCategory");
+const mongoose = require("mongoose");
+const cloudinary = require("cloudinary").v2;
+const upload = require("../utils/imagesUploder");
 
 exports.createProduct = async (req, resp) => {
   try {
-    console.log('Headers:', req.headers);
-    console.log('Request body:', req.body);
-    console.log('File:', req.file);
+    // console.log('Headers:', req.headers);
+    // console.log('Request body:', req.body);
+    // console.log('File:', req.file);
 
     if (!req.file) {
-      return resp.status(400).json({ error: 'No file uploaded' });
+      return resp.status(400).json({ error: "No file uploaded" });
     }
 
-    const { name, title, price, ratings, color, size, offer, SubcategoryId } =
-      req.body;
+    const { name, title, price, ratings, color, size, offer } = req.body;
 
-      
-    const photos = req.file.path;
+    const image = req.file.path;
+
+    const productItem = new Product({
+      name,
+      title,
+      price,
+      ratings,
+      color,
+      size,
+      offer,
+      image,
+    });
+    await productItem.save();
+    // resp.status(201).json(newItem);
 
     // const thumbnail = req.files.thumbnail;
-    
 
     // const userId = req.user.id;
 
@@ -45,8 +58,6 @@ exports.createProduct = async (req, resp) => {
 
     // upload to cloudinary
 
-
-
     // const images = await uploadTocloudinary(
     //   thumbnail,
     //   process.env.CLOUDINARY_URL,
@@ -54,20 +65,19 @@ exports.createProduct = async (req, resp) => {
     //   1000
     // );
 
-
-    const productItem = await Product({
-      name,
-      title,
-      price,
-      ratings,
-      color,
-      size,
-      offer,
-      photos,
-      // thumbnail: images.secure_url,
-      // postedBy: userId,
-      // subcategory: SubCategoryDetails._id,
-    });
+    // const productItem = await Product({
+    //   name,
+    //   title,
+    //   price,
+    //   ratings,
+    //   color,
+    //   size,
+    //   offer,
+    //   images,
+    //   // thumbnail: images.secure_url,
+    //   // postedBy: userId,
+    //   // subcategory: SubCategoryDetails._id,
+    // });
 
     // add course entry in Category => because us Category ke inside sare course aa jaye
 
@@ -80,13 +90,14 @@ exports.createProduct = async (req, resp) => {
     //   },
     //   { new: true }
     // );
-    await productItem.save();
+    // await productItem.save();
+
+    console.log(productItem);
     return resp.status(200).json({
       success: true,
       messages: "successfully created the product",
       productItem,
     });
-    console.log(productItem);
   } catch (error) {
     console.log(error);
     resp.status(500).json({
@@ -96,18 +107,157 @@ exports.createProduct = async (req, resp) => {
   }
 };
 
-exports.getproduct = async(req, resp) =>{
+exports.getproduct = async (req, resp) => {
   try {
-     const allproduct = await Product.find()
-     return resp.status(200).json({
-        success: true,
-        allproduct,
-     });
+    const allproduct = await Product.find();
+    return resp.status(200).json({
+      success: true,
+      allproduct,
+    });
   } catch (error) {
-    console.log(error)
+    // console.log(error)
     resp.status(500).json({
-      success:false,
-      messages:"Internal server error"
+      success: false,
+      messages: "Internal server error",
+    });
+  }
+};
+
+exports.getProductbyId = async (req, resp) => {
+  try {
+    const { productId } = req.params;
+
+    if (!productId || !mongoose.Types.ObjectId.isValid(productId)) {
+      return resp.status(403).json({
+        success: false,
+        message: "Please send the product Id",
+      });
+    }
+
+    const productdetails = await Product.findById({ _id: productId });
+
+    if (!productdetails) {
+      return resp.status(404).json({
+        success: false,
+        message: "unable to find product details this Id",
+      });
+    }
+
+    return resp.status(200).json({
+      success: true,
+      message: "Successfully fetch the product Details",
+      data: productdetails,
+    });
+  } catch (error) {
+    console.error("Error fetching product details:", error); // Log the error
+    resp.status(500).json({
+      success: false,
+      messages: "Internal server error",
+    });
+  }
+};
+
+exports.updateProduct = async (req, resp) => {
+  try {
+    const { name, title, price, ratings, color, size, offer } = req.body;
+
+    const image = req.file ? req.file.path : undefined; // Use undefined if no file is uploaded
+
+    const { productId } = req.params;
+
+    if (!productId) {
+      return resp.json(403).json({
+        success: false,
+        message: "please enter the product Id",
+      });
+    }
+    // check the product id is exits or not
+
+    const productdetails = await Product.findById({ _id: productId });
+
+    if (productdetails) {
+      return resp.status(404).json({
+        success: false,
+        message: "Unable to find product details with this Id",
+      });
+    }
+
+    // if product Id is valid
+
+    if (name) {
+      productdetails.name = name;
+    }
+
+    if (title) {
+      productdetails.title = title;
+    }
+
+    if (price) {
+      productdetails.price = price;
+    }
+    if (ratings) {
+      productdetails.ratings = ratings;
+    }
+    if (size) {
+      productdetails.size = size;
+    }
+    if (color) {
+      productdetails.color = color;
+    }
+    if (offer) {
+      productdetails.offer = offer;
+    }
+    if (image) {
+      // Upload image to Cloudinary
+      const result = await cloudinary.uploader.upload(image);
+
+      // Update productdetails with new image URL
+      productdetails.image = result.secure_url;
+      // productdetails.image = image;
+    }
+
+    await productdetails.save();
+    return resp.status(200).json({
+      success: true,
+      messages: "successfully update the product",
+      productdetails: productdetails, // Include the updated product details in the response
+    });
+  } catch (error) {
+    console.log(error);
+    resp.status(500).json({
+      success: false,
+      message: "internal server error",
+    });
+  }
+};
+
+exports.deleteProduct = async (req, resp) => {
+  try {
+    const {productId} = req.params;
+
+    if (!productId) {
+      return resp.status(403).json({
+        success:false,
+        message:"Please the enter the product Id"
+      })
+    }
+
+    // delete the product 
+    const productdetails = await Product.findById({_id:productId})
+
+   await Product.findByIdAndDelete({_id: productId})
+
+   return resp.status(200).json({
+    success:true,
+    message:"product deleted successfully",
+    productdetails
+   })
+
+  } catch (error) {
+    console.log(error);
+    resp.status(500).json({
+      success: false,
+      message: "internal server error",
     });
   }
 };

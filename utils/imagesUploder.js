@@ -27,7 +27,8 @@ const storage = new CloudinaryStorage({
     try {
       return {
         folder: 'upload',
-        format: 'png', // or use file.mimetype.split('/')[1] for dynamic format
+        // format: 'png', // or use file.mimetype.split('/')[1] for dynamic format
+        allowed_formats: ['jpg', 'png'],
         public_id: 'computed-filename-using-request',
       };
     } catch (error) {
