@@ -162,11 +162,15 @@ exports.updateProduct = async (req, resp) => {
     const { name, title, price, ratings, color, size, offer } = req.body;
 
     const image = req.file ? req.file.path : undefined; // Use undefined if no file is uploaded
+    
+    console.log("before Received data:", { name, title, price, ratings, color, size, offer, image });
 
     const { productId } = req.params;
 
+    console.log(productId)
+
     if (!productId) {
-      return resp.json(403).json({
+      return resp.status(403).json({
         success: false,
         message: "please enter the product Id",
       });
@@ -175,12 +179,15 @@ exports.updateProduct = async (req, resp) => {
 
     const productdetails = await Product.findById({ _id: productId });
 
-    if (productdetails) {
+    if (!productdetails) {
       return resp.status(404).json({
         success: false,
         message: "Unable to find product details with this Id",
       });
     }
+
+    // Logging received data for debugging
+    console.log("Received data:", { name, title, price, ratings, color, size, offer, image });
 
     // if product Id is valid
 
@@ -211,15 +218,20 @@ exports.updateProduct = async (req, resp) => {
       // Upload image to Cloudinary
       const result = await cloudinary.uploader.upload(image);
 
+      console.log("Cloudinary upload result:", result);
+
       // Update productdetails with new image URL
       productdetails.image = result.secure_url;
       // productdetails.image = image;
     }
 
     await productdetails.save();
+
+    console.log("Updated product details:", productdetails);
+
     return resp.status(200).json({
       success: true,
-      messages: "successfully update the product",
+      message: "successfully update the product",
       productdetails: productdetails, // Include the updated product details in the response
     });
   } catch (error) {
