@@ -8,7 +8,7 @@ const productmodel = mongoose.Schema({
     type: String,
   },
   price: {  
-    type: Number,
+    type:Number,
   },
   ratings: {
     type: String,

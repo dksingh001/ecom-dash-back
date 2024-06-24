@@ -22,8 +22,10 @@ connectDb();
 // const cloudinaryConnect = require("./db/cloudinary")
 // cloudinaryConnect()
 
+app.use(express.json()); // Parse JSON bodies
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
-app.use(express.json());
+// app.use(express.json());
 app.use(cors());
 
 app.get('/', (req, resp)=>{

@@ -9,7 +9,7 @@ router.get("/getproduct", getproduct)
 
 router.get("/getproductbyId/:productId", getProductbyId)
 
-router.put("/updateproduct/:productId", updateProduct)
+router.put("/updateproduct/:productId", upload.single('image') ,updateProduct)
 
 router.delete("/deleteproduct/:productId", deleteProduct)
 
