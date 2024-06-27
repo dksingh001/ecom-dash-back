@@ -9,4 +9,8 @@ router.post('/login', login)
 // user signup
 router.post('/signup', signup)
 
+// Admin login
+router.post('/adminlogin', )
+
+
 module.exports = router;
