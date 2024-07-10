@@ -29,7 +29,19 @@ const productmodel = mongoose.Schema({
   // },
   image:{
       type:String,
-  }
+  },
+  cart:[{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"User"
+  }],
+  createdAt:[{
+    type:Date,
+    default:Date.now(),
+  }],
+  wishlist:[{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"User"
+  }]
 });
 
 const productSchema = mongoose.model("ProductDetails", productmodel);
