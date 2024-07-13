@@ -37,6 +37,8 @@ exports.addtoWishlist = async (req, resp)=>{
     }
 }
 
+//remove form wishlist
+
 exports.removetowishlist = async (req, resp)=>{
     try {
 
@@ -78,3 +80,4 @@ exports.removetowishlist = async (req, resp)=>{
         })
     }
 }
+
