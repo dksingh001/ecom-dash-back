@@ -17,6 +17,11 @@ const usermodel = new mongoose.Schema({
     conformpassword: {
       type:String,
       trim:true,
+    },
+    role:{
+        type:String,
+        anum:["Admin", "User"],
+        default:"User"
     }
 })
 
