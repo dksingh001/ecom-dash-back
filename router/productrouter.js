@@ -3,7 +3,7 @@ const router = express.Router()
 const upload = require("../utils/imagesUploder")
 const {createProduct,  getproduct, getProductbyId, updateProduct ,deleteProduct} = require('../controller/product_controller')
 
-router.post("/create", upload.single('image'), createProduct )
+router.post("/create", upload.single('image'), createProduct)
 
 router.get("/getproduct", getproduct)
 

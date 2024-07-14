@@ -43,6 +43,9 @@ app.get('/', (req, resp)=>{
 app.use('/auth', userRouter )
 app.use('/product', productRouter);
 
+const cartRouter =require("./router/cartRouter")
+app.use("/api/cw", cartRouter)
+
 app.listen(port, ()=>{
     console.log("Listening on", port)
 })

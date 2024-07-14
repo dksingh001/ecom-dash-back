@@ -4,7 +4,12 @@ const Product = require("../models/product_model");
 // Add to cart
 exports.addtoCart = async (req, resp)=>{
     try {
-        const {productId} = req.params;
+        // const {productId} = req.params;
+
+        const { productId } = req.body; // Retrieve productId from the request body
+      
+        console.log(productId)
+        console.log("req.user:", req.user);
 
         const userId = req.user.id;
 
