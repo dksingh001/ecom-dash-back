@@ -76,9 +76,9 @@ exports.login = async (req, resp) => {
 
 exports.signup = async (req, resp) => {
   try {
-    const { name, phone, email, password, confrompassword } = req.body;
+    const { name, phone, email, password, conformpassword } = req.body;
 
-    // if (!name || !phone || !email || !password || !confrompassword) {
+    // if (!name || !phone || !email || !password || !conformpassword) {
     //   return resp.status(403).json({
     //     success: false,
     //     messages: "all fields are required",
@@ -101,7 +101,7 @@ exports.signup = async (req, resp) => {
       phone,
       email,
       password: hashPassword,
-      confrompassword: hashPassword,
+      conformpassword: hashPassword,
     });
 
     return resp.status(200).json({
@@ -113,7 +113,7 @@ exports.signup = async (req, resp) => {
     console.log(error);
     return resp.status(500).json({
       success: false,
-      messages: "successfully signup",
+      messages: "User unable to register",
     });
   }
 };
