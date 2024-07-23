@@ -101,7 +101,7 @@ exports.signup = async (req, resp) => {
       phone,
       email,
       password: hashPassword,
-      conformpassword: hashPassword,
+      // conformpassword: hashPassword,
     });
 
     return resp.status(200).json({
@@ -117,4 +117,3 @@ exports.signup = async (req, resp) => {
     });
   }
 };
-
