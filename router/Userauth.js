@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router();
 
+const {isUser, isAdmin } = require("../middleware/auth")
+
 const {login , signup} = require("../controller/user_controller")
 
 // user login
