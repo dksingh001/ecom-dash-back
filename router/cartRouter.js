@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router();
 
-const {auth, isUser} = require("../controller/cart_controller")
+const {auth, isUser} = require("../middleware/auth")
 
 // Cart Section route
 const {addtoCart, removeFromCart, fetchallCartItem} = require("../controller/cart_controller")
