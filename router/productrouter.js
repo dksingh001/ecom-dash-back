@@ -2,8 +2,9 @@ const express = require("express")
 const router = express.Router()
 const upload = require("../utils/imagesUploder")
 const {createProduct,  getproduct, getProductbyId, updateProduct ,deleteProduct} = require('../controller/product_controller')
+const {auth, isauth, isUser, isAdmin } = require("../middleware/auth")
 
-router.post("/create", upload.single('image'), createProduct)
+router.post("/create", upload.single('image'), auth, isAdmin, createProduct)
 
 router.get("/getproduct", getproduct)
 

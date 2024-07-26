@@ -9,7 +9,7 @@ const {addtoCart, removeFromCart, fetchallCartItem} = require("../controller/car
 
 router.get("/fetchallcartItem", fetchallCartItem)
 
-router.post("/addtocart/:productId", addtoCart)
+router.post("/addtocart/:productId", isUser, addtoCart)
 
 router.post('/removefromcart/:productId', removeFromCart)
 

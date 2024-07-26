@@ -8,10 +8,11 @@ exports.addtoCart = async (req, resp)=>{
 
         const { productId } = req.body; // Retrieve productId from the request body
       
-        console.log(productId)
+        // console.log(productId)
         console.log("req.user:", req.user);
 
         const userId = req.user.id;
+        // console.log(userId)
 
         if (!productId || !userId) {
             return resp.status(403).json({
@@ -95,7 +96,7 @@ exports.removeFromCart = async (req, resp) => {
 // fetch all cart items of users
 exports.fetchallCartItem = async (req, resp)=>{
     try {
-        const userId = req.user.Id;
+        const userId = req.user.id;
 
         if (!userId) {
             return({
