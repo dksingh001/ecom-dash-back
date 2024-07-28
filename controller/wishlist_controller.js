@@ -67,6 +67,7 @@ exports.removetowishlist = async (req, resp) => {
       productDetails.wishlist.splice(indexremove, 1);
       await productDetails.save();
       resp.status(200).json({
+        success:true,
         message: "Product removed from wishlist successfully",
       });
     } else {

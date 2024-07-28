@@ -9,7 +9,7 @@ exports.addtoCart = async (req, resp)=>{
         const { productId } = req.body; // Retrieve productId from the request body
       
         // console.log(productId)
-        console.log("req.user:", req.user);
+        // console.log("req.user:", req.user);
 
         const userId = req.user.id;
         // console.log(userId)
@@ -35,7 +35,7 @@ exports.addtoCart = async (req, resp)=>{
         await productdetails.save();
 
         resp.status(200).json({
-            success:false,
+            success:true,
             message:"Poduct added to cart successfully"
         });
     } catch (error) {
@@ -67,7 +67,7 @@ exports.removeFromCart = async (req, resp) => {
     if (!productdetails) {
         return resp.status(404).json({
             success: false,
-            message:"The product do not exist with current Id"
+            message:"The product Id do not exist with current Id"
         })
     }
 
@@ -77,8 +77,9 @@ exports.removeFromCart = async (req, resp) => {
     productdetails.cart.splice(indexToRemove, 1);
     await productdetails.save();
     resp.status(200).json({
+        success:true,
         message:"Product removed from cart successfully",
-        success:true
+        // success:true
     });
    }else{
     resp.status(404).json({error:"User not found in the product's cart"});

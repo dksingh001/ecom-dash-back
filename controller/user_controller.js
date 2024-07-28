@@ -32,18 +32,20 @@ exports.login = async (req, resp) => {
     const payload = {
       email: user.email,
       id: user._id,
+      role:user.role
     };
 
     // password match and generate jwt
     if (await bcrypt.compare(password, user.password)) {
+
       //   creating token
       const token = jwt.sign(payload, process.env.JWT_SECRET_TOKEN, {
         expiresIn: "3d",
       });
 
       //
-      user.token = token;
-      user.password = undefined;
+      // user.token = token;
+      // user.password = undefined;
 
       const option = {
         expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
@@ -54,7 +56,8 @@ exports.login = async (req, resp) => {
       resp.cookie("token", token, option).status(200).json({
         success: true,
         token,
-        user,
+        // user,
+        user: { email: user.email, id: user._id, role: user.role },
         message: `login successfully`,
       });
     } else {
