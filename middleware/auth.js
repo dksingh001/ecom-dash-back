@@ -24,6 +24,7 @@ exports.auth = async (req, resp, next) => {
       const decode = jwt.verify(token, process.env.JWT_SECRET_TOKEN);
       console.log("deocde", decode);
       req.user = decode;
+      next()
     } catch (error) {
       console.log("error in auth middleware", error);
       resp.status(401).json({
@@ -84,6 +85,7 @@ exports.isUser = async (req, resp, next) =>{
         }
         next();
     } catch (error) {
+      console.log("Error in isUser middleware", error);
         resp.status(500).json({
             success:false,
             message:"user role con't be verified, please try again"
