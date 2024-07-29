@@ -120,3 +120,13 @@ exports.signup = async (req, resp) => {
     });
   }
 };
+
+// Admin login 
+
+exports.Adminlogin = async (req, resp) =>{
+  try {
+    
+  } catch (error) {
+    
+  }
+}
