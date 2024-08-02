@@ -4,7 +4,7 @@ const upload = require("../utils/imagesUploder")
 const {createProduct,  getproduct, getProductbyId, updateProduct ,deleteProduct} = require('../controller/product_controller')
 const {auth, isauth, isUser, isAdmin } = require("../middleware/auth")
 
-router.post("/create", upload.single('image'), auth, isAdmin, createProduct)
+router.post("/create", upload.single('image'), createProduct)
 
 router.get("/getproduct", getproduct)
 
