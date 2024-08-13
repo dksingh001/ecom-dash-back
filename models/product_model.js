@@ -22,6 +22,12 @@ const productmodel = mongoose.Schema({
   offer: {
     type: String,
   },
+  images: [
+    {
+      public_id: { type: String },
+      url: { type: String },
+    },
+  ],
   // photos: {
   //   public_id: { type: String, required: true },
 
