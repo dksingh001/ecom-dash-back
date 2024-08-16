@@ -121,6 +121,24 @@ exports.signup = async (req, resp) => {
   }
 };
 
+
+exports.getUser = async (req, resp) =>{
+  try {
+    const userData = await User.find()
+
+    return resp.status(200).json({
+      success:true,
+      userData
+    })
+    
+  } catch (error) {
+    return resp.status(500).json({
+      success:false,
+      message:"Unable to get user data"
+    })
+    
+  }
+}
 // Admin login 
 
 exports.Adminlogin = async (req, resp) =>{
