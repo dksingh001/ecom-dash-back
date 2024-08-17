@@ -139,6 +139,34 @@ exports.getUser = async (req, resp) =>{
     
   }
 }
+
+exports.getUserbyId = async (req,resp) =>{
+  try {
+    const { userId } = req.params;
+
+    const userdetails = await User.findById({ _id: userId });
+
+    if (!userdetails) {
+      return resp.status(404).json({
+        success: false,
+        message: "unable to find User details this Id",
+      });
+    }
+
+    return resp.status(200).json({
+      success: true,
+      message: "Successfully fetch the User Details",
+      data: userdetails,
+    });
+    
+  } catch (error) {
+    return resp.status(500).json({
+      success:false,
+      message:"Unable to get user data"
+    })
+  }
+}
+
 // Admin login 
 
 exports.Adminlogin = async (req, resp) =>{
