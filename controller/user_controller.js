@@ -32,7 +32,8 @@ exports.login = async (req, resp) => {
     const payload = {
       email: user.email,
       id: user._id,
-      role:user.role
+      role:user.role,
+      name:user.name
     };
 
     // password match and generate jwt
@@ -57,7 +58,7 @@ exports.login = async (req, resp) => {
         success: true,
         token,
         // user,
-        user: { email: user.email, id: user._id, role: user.role },
+        user: { email: user.email, id: user._id, role: user.role, name: user.name },
         message: `login successfully`,
       });
     } else {
