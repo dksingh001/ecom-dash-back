@@ -3,6 +3,9 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
+
+// <============  User login & Signup ===========>
+
 // user login
 
 exports.login = async (req, resp) => {
@@ -167,6 +170,18 @@ exports.getUserbyId = async (req,resp) =>{
     })
   }
 }
+
+// <============  Admin login & Signup ===========>
+
+  // Admin Signup 
+
+  exports.adminSignup = async(req, resp) =>{
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
 
 // Admin login 
 
