@@ -4,8 +4,9 @@ const router = express.Router();
 const {auth, isUser} = require("../middleware/auth")
 
 // Cart Section route
-const {addtoCart, removeFromCart, fetchallCartItem} = require("../controller/cart_controller")
+const {addtoCart, removeFromCart, fetchallCartItem, fetchCartItem} = require("../controller/cart_controller")
 
+router.get("/fetchcartitem", auth, isUser, fetchCartItem)
 
 router.get("/fetchallcartItem",auth, isUser, fetchallCartItem)
 
