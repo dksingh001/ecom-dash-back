@@ -1,5 +1,6 @@
 // const { json } = require("express");
 const Product = require("../models/product_model");
+const User = require("../models/user_model")
 
 // Add to cart
 exports.addtoCart = async (req, resp)=>{
@@ -92,6 +93,47 @@ exports.removeFromCart = async (req, resp) => {
         message:"error in add to cart"
     })
  }
+}
+
+// fetch cart item of user 
+exports.fetchCartItem = async (req, resp) =>{
+   try {
+    const userId = req.user.id;
+
+    if (!userId) {
+        return resp.status(403).json({
+            success:false,
+            message:"user ID is missing"
+        });
+    }
+
+    // Assuming you store the cart as an array of product IDs in the suer's document 
+    const userCart = await User.findById(userId).select("cart"); // Replace "User" with your User model
+    const cartItems  = userCart.cart;
+
+    if (!cartItems || cartItems === 0) {
+        return resp.status(404).json({
+            success:false,
+            message:"No items found in the cart",
+        })
+    }
+
+    // Fetch all product details by IDs
+     const products = await Product.find({ _id: {$in :cartItems} });
+    
+    resp.status(200).json({
+        success: true,
+        products, // Send the fetch products details 
+        message: "Successfully fetch the cart items"
+    });
+    
+   } catch (error) {
+    console.log(error);
+    return resp.status(500).json({
+        success: false,
+        message: "Error fetching cart items"
+    })
+   }
 }
 
 // fetch all cart items of users
