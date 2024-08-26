@@ -20,5 +20,4 @@ router.get("/get/:userId", getUserbyId)
 // Admin login
 router.post('/adminlogin', )
 
-
 module.exports = router;
