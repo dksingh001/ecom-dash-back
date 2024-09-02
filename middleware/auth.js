@@ -9,7 +9,7 @@ exports.auth = async (req, resp, next) => {
     const token =
       req.cookies.token ||
       req.body.token ||
-      req.header("Authorization").replace("Bearer ", ""); // Ensure there's a space after "Bearer"
+      req.header("Authorization")?.replace("Bearer" , ""); // Ensure there's a space after "Bearer"
 
     // If token is missing, return a response
     if (!token) {
