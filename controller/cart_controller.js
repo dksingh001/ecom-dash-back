@@ -5,7 +5,7 @@ const User = require("../models/user_model");
 exports.addtoCart = async (req, resp) => {
     try {
         const { productId } = req.body; // Retrieve productId from the request body
-        const userId = req.user?.id;
+        const userId = req.user?.id; // Safe way to get user ID
 
         if (!productId || !userId) {
             return resp.status(400).json({
@@ -13,14 +13,14 @@ exports.addtoCart = async (req, resp) => {
                 message: "Please provide both productId and userId"
             });
         }
-           // Check if the user is already in the cart
-           if (productdetails.cart.includes(userId)) {
-            console.warn("User already added this product to the cart");
-            return resp.status(400).json({
-                success: false,
-                message: "User already added this product to the cart"
-            });
-        }
+        //    // Check if the user is already in the cart
+        //    if (productdetails.cart.includes(userId)) {
+        //     console.warn("User already added this product to the cart");
+        //     return resp.status(400).json({
+        //         success: false,
+        //         message: "User already added this product to the cart"
+        //     });
+        // }
 
         // Check if the product exists
         const productdetails = await Product.findById(productId);
