@@ -9,7 +9,9 @@ exports.auth = async (req, resp, next) => {
     const token =
       req.cookies.token ||
       req.body.token ||
-      req.header("Authorization")?.replace("Bearer"," "); // Ensure there's a space after "Bearer"
+      req.header("Authorization")?.replace("Bearer", "").trim(); // Ensure token is correctly extracted
+
+    console.log("Extracted Token:", token); // Debug log to check token extraction
 
     // If token is missing, return a response
     if (!token) {
@@ -22,11 +24,11 @@ exports.auth = async (req, resp, next) => {
     // Verify the token
     try {
       const decode = jwt.verify(token, process.env.JWT_SECRET_TOKEN);
-      console.log("Decoded", decode);
+      console.log("Decoded User:", decode);
       req.user = decode;
       next();
     } catch (error) {
-      console.log("Error in auth middleware", error);
+      console.log("Error in auth middleware during token verification", error);
       return resp.status(401).json({
         success: false,
         message: "Invalid or expired token",
