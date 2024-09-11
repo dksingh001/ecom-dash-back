@@ -24,7 +24,7 @@ exports.addtoCart = async (req, resp) => {
 
         // Check if the product exists
         const productdetails = await Product.findById(productId);
-        console.log(productdetails)
+        // console.log(productdetails)
         if (!productdetails) {
             return resp.status(404).json({
                 success: false,
