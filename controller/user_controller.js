@@ -177,9 +177,38 @@ exports.getUserbyId = async (req,resp) =>{
 
   exports.adminSignup = async(req, resp) =>{
     try {
-      
+      const { name, email, password, conformpassword } = req.body;
+
+  
+      const exitUser = await User.findOne({ email });
+  
+      if (exitUser) {
+        return resp.status(400).json({
+          success: false,
+          messages: "User is already registerd",
+        });
+      }
+  
+      const hashPassword = await bcrypt.hash(password, 10);
+  
+      const userdetails = await User.create({
+        name,
+        phone,
+        email,
+        password: hashPassword,
+      });
+  
+      return resp.status(200).json({
+        success: true,
+        messages: "User is register successfully",
+        userdetails,
+      });
     } catch (error) {
-      
+      console.log(error);
+      return resp.status(500).json({
+        success: false,
+        messages: "User unable to register",
+      });
     }
   }
 
