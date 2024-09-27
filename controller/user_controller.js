@@ -216,8 +216,64 @@ exports.getUserbyId = async (req,resp) =>{
 
 exports.Adminlogin = async (req, resp) =>{
   try {
-    
+    // get data from req.body
+    const { email } = req.body;
+
+
+    // check the user is exit or not
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return resp.status(401).json({
+        success: false,
+        messages: `please register before the login`,
+      });
+    }
+
+    const payload = {
+      email: user.email,
+      id: user._id,
+      role:user.role,
+      name:user.name
+    };
+
+    // password match and generate jwt
+    if (await bcrypt.compare(password, user.password)) {
+
+      //   creating token
+      const token = jwt.sign(payload, process.env.JWT_SECRET_TOKEN, {
+        expiresIn: "1d",
+      });
+
+      //
+      // user.token = token;
+      // user.password = undefined;
+
+      const option = {
+        expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+        httpOnly: true,
+      };
+
+      // create cookie and send response
+      resp.cookie("token", token, option).status(200).json({
+        success: true,
+        token,
+        // user,
+        user: { email: user.email, id: user._id, role: user.role, name: user.name },
+        message: `login successfully`,
+      });
+    } else {
+      return resp.status(401).json({
+        success: false,
+        message: `password inccorrect`,
+      });
+    }
   } catch (error) {
-    
+    console.log(`login of error`, error);
+    return resp.status().json({
+        success: false,
+        message:`failed login, please try again`
+    })
   }
-}
+};
