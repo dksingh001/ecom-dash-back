@@ -15,7 +15,7 @@ exports.createProduct = async (req, resp) => {
       return resp.status(400).json({ error: "No file uploaded" });
     }
 
-    const { name, title, price, ratings, color, size, offer } = req.body;
+    const { name, title, price, ratings, color, size, size1, offer } = req.body;
 
     const image = req.file.path;
 
@@ -26,6 +26,7 @@ exports.createProduct = async (req, resp) => {
       ratings,
       color,
       size,
+      size1,
       offer,
       image,
     });
@@ -92,7 +93,7 @@ exports.createProduct = async (req, resp) => {
     // );
     // await productItem.save();
 
-    console.log(productItem);
+    // console.log(productItem);
     return resp.status(200).json({
       success: true,
       messages: "successfully created the product",
@@ -159,11 +160,11 @@ exports.getProductbyId = async (req, resp) => {
 
 exports.updateProduct = async (req, resp) => {
   try {
-    const { name, title, price, ratings, color, size, offer } = req.body;
+    const { name, title, price, ratings, color, size, size1, offer } = req.body;
 
     const image = req.file ? req.file.path : undefined; // Use undefined if no file is uploaded
     
-    console.log("before Received data:", { name, title, price, ratings, color, size, offer, image });
+    console.log("before Received data:", { name, title, price, ratings, color, size, size1, offer, image });
 
     const { productId } = req.params;
 
@@ -187,7 +188,7 @@ exports.updateProduct = async (req, resp) => {
     }
 
     // Logging received data for debugging
-    console.log("Received data:", { name, title, price, ratings, color, size, offer, image });
+    console.log("Received data:", { name, title, price, ratings, color, size, size1, offer, image });
 
     // if product Id is valid
 
@@ -207,6 +208,9 @@ exports.updateProduct = async (req, resp) => {
     }
     if (size) {
       productdetails.size = size;
+    }
+    if (size1) {
+      productdetails.size1 = size1;
     }
     if (color) {
       productdetails.color = color;
@@ -273,3 +277,5 @@ exports.deleteProduct = async (req, resp) => {
     });
   }
 };
+
+

@@ -7,8 +7,8 @@ const productmodel = mongoose.Schema({
   title: {
     type: String,
   },
-  price: {  
-    type:Number,
+  price: {
+    type: Number,
   },
   ratings: {
     type: String,
@@ -16,9 +16,18 @@ const productmodel = mongoose.Schema({
   color: {
     type: String,
   },
-  size: {
-    type: String,
+  // size: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     type: String,
+  //   },
+  // ],
+  size:{
+      type:String,
   },
+  size1:{
+    type:String,
+   },
   offer: {
     type: String,
   },
@@ -33,21 +42,27 @@ const productmodel = mongoose.Schema({
 
   //   url: { type: String, required: true },
   // },
-  image:{
-      type:String,
+  image: {
+    type: String,
   },
-  cart:[{
-    type:mongoose.Schema.Types.ObjectId,
-    ref:"User"
-  }],
-  createdAt:[{
-    type:Date,
-    default:Date.now(),
-  }],
-  wishlist:[{
-    type:mongoose.Schema.Types.ObjectId,
-    ref:"User"
-  }]
+  cart: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  createdAt: [
+    {
+      type: Date,
+      default: Date.now(),
+    },
+  ],
+  wishlist: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
 });
 
 const productSchema = mongoose.model("ProductDetails", productmodel);
