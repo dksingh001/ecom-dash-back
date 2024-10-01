@@ -193,7 +193,6 @@ exports.getUserbyId = async (req,resp) =>{
   
       const userdetails = await User.create({
         name,
-        phone,
         email,
         password: hashPassword,
       });
