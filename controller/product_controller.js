@@ -26,9 +26,10 @@ exports.createProduct = async (req, resp) => {
       ratings,
       color,
       size,
-      size1,
+      // size1,
       offer,
       image,
+      Simages
     });
     await productItem.save();
     // resp.status(201).json(newItem);
@@ -209,7 +210,7 @@ exports.updateProduct = async (req, resp) => {
     if (size) {
       productdetails.size = size;
     }
-    if (size1) {
+    if (size1) { 
       productdetails.size1 = size1;
     }
     if (color) {
