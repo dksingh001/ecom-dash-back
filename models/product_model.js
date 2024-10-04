@@ -22,20 +22,17 @@ const productmodel = mongoose.Schema({
   //     type: String,
   //   },
   // ],
-  size:{
-      type:String,
-  },
+  size:[
+      String
+  ],
   size1:{
     type:String,
    },
   offer: {
     type: String,
   },
-  images: [
-    {
-      public_id: { type: String },
-      url: { type: String },
-    },
+  Simages: [
+      String
   ],
   // photos: {
   //   public_id: { type: String, required: true },
