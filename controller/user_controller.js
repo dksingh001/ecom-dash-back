@@ -38,7 +38,7 @@ exports.login = async (req, resp) => {
       role:user.role,
       name:user.name
     };
-
+    console.log(payload)
     // password match and generate jwt
     if (await bcrypt.compare(password, user.password)) {
 
@@ -177,7 +177,7 @@ exports.getUserbyId = async (req,resp) =>{
 
   exports.adminSignup = async(req, resp) =>{
     try {
-      const { name, email, password, conformpassword } = req.body;
+      const { name, email, password, role } = req.body;
 
   
       const exitUser = await User.findOne({ email });
@@ -191,22 +191,23 @@ exports.getUserbyId = async (req,resp) =>{
   
       const hashPassword = await bcrypt.hash(password, 10);
   
-      const userdetails = await User.create({
+      const Admindetails = await User.create({
         name,
         email,
         password: hashPassword,
+        role: role || 'User',  // Assign default role 'User' if not provided
       });
   
       return resp.status(200).json({
         success: true,
-        messages: "User is register successfully",
-        userdetails,
+        messages: "Admin is register successfully",
+        Admindetails,
       });
     } catch (error) {
       console.log(error);
       return resp.status(500).json({
         success: false,
-        messages: "User unable to register",
+        messages: "Admin unable to register",
       });
     }
   }
@@ -216,7 +217,7 @@ exports.getUserbyId = async (req,resp) =>{
 exports.Adminlogin = async (req, resp) =>{
   try {
     // get data from req.body
-    const { email } = req.body;
+    const { email, password } = req.body;
 
 
     // check the user is exit or not
@@ -234,9 +235,9 @@ exports.Adminlogin = async (req, resp) =>{
       email: user.email,
       id: user._id,
       role:user.role,
-      name:user.name
+      name:user.name,
     };
-
+    console.log(payload)
     // password match and generate jwt
     if (await bcrypt.compare(password, user.password)) {
 
