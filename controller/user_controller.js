@@ -28,7 +28,7 @@ exports.login = async (req, resp) => {
     if (!user) {
       return resp.status(401).json({
         success: false,
-        messages: `please register before the login`,
+        messages: `Incorrect email address`,
       });
     }
 
