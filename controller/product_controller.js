@@ -15,7 +15,7 @@ exports.createProduct = async (req, resp) => {
       return resp.status(400).json({ error: "No file uploaded" });
     }
 
-    const { name, title, price, ratings, color, size, size1, offer } = req.body;
+    const { name, title, price, disprice, perceprice, ratings, color, size, size1, offer } = req.body;
 
     const image = req.file.path;
 
@@ -23,13 +23,15 @@ exports.createProduct = async (req, resp) => {
       name,
       title,
       price,
+      disprice,
+      perceprice,
       ratings,
       color,
       size,
       // size1,
       offer,
       image,
-      Simages
+      // Simages
     });
     await productItem.save();
     // resp.status(201).json(newItem);

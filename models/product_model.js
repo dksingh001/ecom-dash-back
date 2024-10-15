@@ -10,6 +10,12 @@ const productmodel = mongoose.Schema({
   price: {
     type: Number,
   },
+  disprice: {
+    type: Number,
+  },
+  perceprice: {
+    type: String,
+  },
   ratings: {
     type: String,
   },
@@ -22,18 +28,14 @@ const productmodel = mongoose.Schema({
   //     type: String,
   //   },
   // ],
-  size:[
-      String
-  ],
-  size1:{
-    type:String,
-   },
+  size: [String],
+  // size1: {
+  //   type: String,
+  // },
   offer: {
     type: String,
   },
-  Simages: [
-      String
-  ],
+  Simages: [String],
   // photos: {
   //   public_id: { type: String, required: true },
 
